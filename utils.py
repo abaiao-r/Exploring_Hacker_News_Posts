@@ -13,6 +13,6 @@
 # print_separator() function: prints a separator
 # return: nothing, just prints a separator
 def print_separator():
-    print("\n");
-    print("----------------------------------------\n");
-    print("\n");
+    print("\n")
+    print("----------------------------------------\n")
+    print("\n")

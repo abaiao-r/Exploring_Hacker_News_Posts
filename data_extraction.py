@@ -13,10 +13,14 @@
 from utils import *
 import csv
 
+# extract_csv() function: extracts the data from a csv file
+# file_name: string with the name of the file
+# header: boolean parameter with True as default argument
+# return: the data and the header or just the data if header is False as a list
 def extract_csv(file_name, header=True):
-    if (file_name == None):
+    if file_name is None:
         print("Error : no file name provided for extract_csv function")
-        return(None)
+        return (None)
     try:
         csv_file = open(file_name, encoding="utf-8")
     except FileNotFoundError:
@@ -25,22 +29,26 @@ def extract_csv(file_name, header=True):
     except Exception as e:
         print(f"Error: {e}")
         return (None)
+
     csv_reader = csv.reader(csv_file)
     data = list(csv_reader)
-    if (header == True):
+    if header:
         data_header = data[0]
         data = data[1:]
-    csv_file.close()
-    return(data, data_header)
+        csv_file.close()
+        return data, data_header
+    else:
+        csv_file.close()
+        return data
 
-# explore_data() function: allows us to explore the rows and columns of a 
+# print_dataset_slice() function: allows us to explore the rows and columns of a 
 # dataset
 # dataset: list of lists
 # start and end: integers that slice the dataset
 # rows_and_columns: boolean parameter with False as default argument
 # return: nothing, just prints the number of rows and columns and slices the 
 # dataset
-def explore_data(dataset, start, end, rows_and_columns = False):
+def print_dataset_slice(dataset, start, end, rows_and_columns = False):
     dataset_slice = dataset[start:end]
     for i in dataset_slice:
         print(i);
@@ -49,20 +57,3 @@ def explore_data(dataset, start, end, rows_and_columns = False):
     if rows_and_columns:
         print("Number of rows: ", len(dataset))
         print("Number of columns: ", len(dataset[0]))
-        
-# print the headers and datasets() function: prints the headers and datasets
-# header: list of strings
-# dataset: list of lists
-# dataset_name: string that represents the name of the dataset (optional)
-# return: nothing, just prints the headers and datasets
-def print_headers_and_datasets(header, dataset, dataset_name = None):
-    if (dataset_name != None):
-        print(dataset_name + ": \n");
-    
-    if (header):
-        print(header)
-        print("\n")
-        
-    if (dataset):
-        explore_data(dataset, 0, 5, True)
-        print_separator()
