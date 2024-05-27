@@ -60,5 +60,31 @@ print_dataset_slice(hn, 0, 5, True)
 print_separator()
 
 
+# ## Extracting Ask HN and Show HN Posts
+
+# We will now extract the "Ask HN" and "Show HN" posts from the dataset to
+# analyze them separately. We will also identify the number of posts in each
+# category.
+
+# Lists to store the "Ask HN" and "Show HN" posts
+ask_posts = []
+show_posts = []
+other_posts = []
+
+# Loop through each post in the dataset
+for post in hn:
+    title = post[1].lower()
+    if title.startswith("ask hn"):
+        ask_posts.append(post)
+    elif title.startswith("show hn"):
+        show_posts.append(post)
+    else:
+        other_posts.append(post)
+
+# Check the number of "Ask HN" and "Show HN" posts and other posts
+print("Number of Ask HN posts:", len(ask_posts))
+print("Number of Show HN posts:", len(show_posts))
+print("Number of other posts:", len(other_posts))
+print_separator()
 
 
