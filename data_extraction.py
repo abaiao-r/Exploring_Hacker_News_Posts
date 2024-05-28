@@ -6,7 +6,7 @@
 #    By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/27 19:51:08 by abaiao-r          #+#    #+#              #
-#    Updated: 2024/05/27 20:33:43 by abaiao-r         ###   ########.fr        #
+#    Updated: 2024/05/28 12:50:48 by abaiao-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,20 +40,36 @@ def extract_csv(file_name, header=True):
     else:
         csv_file.close()
         return data
+    
+# extract_post_types() function: splits the dataset into "Ask HN" posts, 
+# "Show HN" posts, and other posts
+# hn: list of lists with the dataset
+# return: the "Ask HN" posts, "Show HN" posts, and other posts as lists of lists
+def extract_post_types(hn):
+    ask_posts = []
+    show_posts = []
+    other_posts = []
 
-# print_dataset_slice() function: allows us to explore the rows and columns of a 
-# dataset
-# dataset: list of lists
-# start and end: integers that slice the dataset
-# rows_and_columns: boolean parameter with False as default argument
-# return: nothing, just prints the number of rows and columns and slices the 
-# dataset
-def print_dataset_slice(dataset, start, end, rows_and_columns = False):
-    dataset_slice = dataset[start:end]
-    for i in dataset_slice:
-        print(i);
-        print("\n");
-        
-    if rows_and_columns:
-        print("Number of rows: ", len(dataset))
-        print("Number of columns: ", len(dataset[0]))
+    for post in hn:
+        title = post[1].lower()
+        if title.startswith("ask hn"):
+            ask_posts.append(post)
+        elif title.startswith("show hn"):
+            show_posts.append(post)
+        else:
+            other_posts.append(post)
+
+    return ask_posts, show_posts, other_posts
+
+# extract_results_list(posts) function: extracts the created_at and num_comments
+# columns from the "Ask HN" posts
+# posts: list of lists with the "Ask HN" posts
+# return: a list of lists with the created_at and num_comments columns
+def extract_results_list(posts):
+    results_list = []
+    
+    for post in posts:
+        created_at = post[6]
+        num_comments = int(post[4])
+        results_list.append([created_at, num_comments])
+    return (results_list)

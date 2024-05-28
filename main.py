@@ -6,7 +6,7 @@
 #    By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/27 19:14:44 by abaiao-r          #+#    #+#              #
-#    Updated: 2024/05/27 20:36:18 by abaiao-r         ###   ########.fr        #
+#    Updated: 2024/05/28 13:00:11 by abaiao-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,20 +70,8 @@ print_separator()
 # analyze them separately. We will also identify the number of posts in each
 # category.
 
-# Lists to store the "Ask HN" and "Show HN" posts
-ask_posts = []
-show_posts = []
-other_posts = []
-
-# Loop through each post in the dataset
-for post in hn:
-    title = post[1].lower()
-    if title.startswith("ask hn"):
-        ask_posts.append(post)
-    elif title.startswith("show hn"):
-        show_posts.append(post)
-    else:
-        other_posts.append(post)
+# Lists to store the "Ask HN" and "Show HN" posts and other posts
+ask_posts, show_posts, other_posts = extract_post_types(hn)
 
 # Check the number of "Ask HN" and "Show HN" posts and other posts
 print("Number of Ask HN posts:", len(ask_posts))
@@ -96,6 +84,7 @@ print_separator()
 # We will now calculate the average number of comments for "Ask HN" and "Show HN"
 # posts to determine which type of post receives more comments on average.
 
+# Calculate the average number of comments for "Ask HN" and "Show HN" posts
 avg_ask_comments = calculate_average_comments(ask_posts)
 print("Average number of comments for Ask HN posts:", avg_ask_comments)
 
@@ -103,9 +92,7 @@ avg_show_comments = calculate_average_comments(show_posts)
 print("Average number of comments for Show HN posts:", avg_show_comments)
 print_separator()
 
-# Do show posts or ask posts receive more comments on average? Write a markdown 
-# cell explaining your findings.
-
+# (1) Do show posts or ask posts receive more comments on average?
 # The average number of comments for "Ask HN" posts is approximately 14.04, while
 # the average number of comments for "Show HN" posts is approximately 10.32.
 # Therefore, "Ask HN" posts receive more comments on average compared to "Show HN"
@@ -121,43 +108,25 @@ print_separator()
 # with the number of comments received.
 # 2. Calculate the average number of comments "Ask HN" posts receive by hour created.
 
-results_list = []
 
-# Extracting the created_at and num_comments columns from the "Ask HN" posts
-for post in ask_posts:
-    created_at = post[6]
-    num_comments = int(post[4])
-    results_list.append([created_at, num_comments])
+# List to store the created_at and num_comments columns from the "Ask HN" posts
+results_list = extract_results_list(ask_posts)
+
 
 # Creating dictionaries to store the number of posts and comments by hour
-counts_by_hour = {}
-comments_by_hour = {}
-
-# Parsing the date and time and calculating the number of posts and comments by hour
-for result in results_list:
-    date_str = result[0]
-    num_comments = result[1]
-    date_dt = dt.strptime(date_str, "%m/%d/%Y %H:%M")
-    hour = date_dt.strftime("%H")
-    if hour not in counts_by_hour:
-        counts_by_hour[hour] = 1
-        comments_by_hour[hour] = num_comments
-    else:
-        counts_by_hour[hour] += 1
-        comments_by_hour[hour] += num_comments
+counts_by_hour, comments_by_hour= parse_coments_by_hour(results_list)
 
 # Calculating the average number of comments per post by hour
-avg_by_hour = []
-for hour in counts_by_hour:
-    avg_by_hour.append([hour, comments_by_hour[hour] / counts_by_hour[hour]])
+avg_by_hour = average_comments_per_post_by_hour(counts_by_hour, comments_by_hour)
+
 print("Average number of comments per post by hour:\n")
 print_dataset_slice(avg_by_hour, 0, len(avg_by_hour), False)
 print_separator()
 
+
 # Swap the columns in the avg_by_hour list of lists
-swap_avg_by_hour = []
-for row in avg_by_hour:
-    swap_avg_by_hour.append([row[1], row[0]])
+swap_avg_by_hour = swap_columns(avg_by_hour)
+
 print("Swapped columns in the avg_by_hour list of lists:\n")
 print_dataset_slice(swap_avg_by_hour, 0, len(swap_avg_by_hour), False)
 print_separator()
@@ -180,9 +149,3 @@ print_separator()
 # posts receive more comments on average compared to "Show HN" posts. Additionally,
 # we discovered that posts created between 15:00 and 16:00 (3:00 pm - 4:00 pm EST)
 # receive the most comments on average.
-
-
-
-
-
-
