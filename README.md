@@ -10,18 +10,60 @@ Hacker News is a popular platform within the technology and startup communities 
 1. Do "Ask HN" or "Show HN" posts receive more comments on average?
 2. Do posts created at a certain time receive more comments on average?
 
-The dataset provided has been filtered to include only posts that received comments, reducing the original dataset from nearly 300,000 rows to approximately 20,000 rows. The columns in the dataset include:
+Using Python to analyze this data, focusing on string manipulation, object-oriented programming, and date and time operations to gain insights into user engagement on Hacker News.
 
-- `id`: The unique identifier for each post.
-- `title`: The title of the post.
-- `url`: The URL the post links to, if applicable.
-- `num_points`: The number of points the post acquired, calculated as upvotes minus downvotes.
-- `num_comments`: The number of comments on the post.
-- `author`: The username of the person who submitted the post.
-- `created_at`: The date and time of the post's submission.
+## Skills and Technologies
+To develop and understand this project, the following skills and technologies are essential:
 
-We will use Python to analyze this data, focusing on string manipulation, object-oriented programming, and date and time operations to gain insights into user engagement on Hacker News.
+- **Programming Languages:**
+  - Python
+- **Libraries and Frameworks:**
+  - `csv` for reading the dataset
+  - `datetime` for handling date and time operations
+- **Tools:**
+  - Jupyter Notebook for interactive development and visualization
+- **Other Relevant Skills:**
+  - Data analysis
+  - String manipulation
+  - Object-oriented programming
+  - Date and time operations
 
-## Importing Libraries and Reading the Dataset
+## Requirements
+To run this project, ensure that you have the following prerequisites installed and configured:
 
-Let's start by importing the necessary libraries and reading the dataset into a list of lists.
+- **Operating System:**
+  - Windows, macOS, or Linux
+- **Software Dependencies:**
+  - Python 3.x
+  - Jupyter Notebook
+- **Python Libraries:**
+  - csv
+  - datetime
+
+### Installation and Setup
+
+1. **Clone the Repository:**
+   ```bash
+   git clone [repository URL]
+    ```
+2. **Navigate to the project directory:**
+    ```bash
+    cd Exploring_Hacker_News_Posts
+    ``` 
+3. **Launch Jupyter Notebook:**
+    ```bash
+    jupyter notebook
+    ```
+4. **Open the Jupyter Notebook file:**
+    - Navigate to the `Exploring_Hacker_News_Posts.ipynb` file and open it.
+    - Follow the instructions in the notebook to run the project.
+
+### If you want to run the project in the terminal, you can use the following command:
+```bash
+python3 main.py
+```
+
+
+## Conclusion
+
+This project provides valuable insights into user engagement on Hacker News, focusing on "Ask HN" and "Show HN" posts. By analyzing the dataset, we can determine the average number of comments each type of post receives and the optimal time to create posts to maximize user engagement.
